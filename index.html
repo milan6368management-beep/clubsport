@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Questionnaire site — Clubsport France × Vseven Production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0b0d;--card:#151518;--card2:#1c1c20;--navy:#0B1B4F;--blue:#2747b8;--red:#E10600;--silver:#C0C0C0;--w:#fff;--mute:rgba(255,255,255,.58);--line:rgba(255,255,255,.1);--ok:#3ccf7a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 80% -10%,rgba(11,27,79,.55),transparent 60%),var(--bg);color:var(--w);font:300 15px/1.6 'Montserrat',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{width:min(760px,92vw);margin:0 auto}
+.top{position:sticky;top:0;z-index:10;background:rgba(11,11,13,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;height:64px}
+.brand{font-weight:500;letter-spacing:.32em;font-size:.72rem;text-transform:uppercase}
+.brand small{display:block;font-weight:300;letter-spacing:.2em;color:var(--mute);font-size:.6rem}
+.meta{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);text-align:right}
+.bar{height:2px;background:var(--line)}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),#fff 50%,var(--red));transition:width .5s}
+.tri{display:inline-flex;width:46px;height:3px}.tri i{flex:1}.tri i:nth-child(1){background:var(--blue)}.tri i:nth-child(2){background:#fff}.tri i:nth-child(3){background:var(--red)}
+main{padding:2.6rem 0 7rem}
+.eyebrow{display:flex;align-items:center;gap:.9rem;font-size:.66rem;letter-spacing:.35em;text-transform:uppercase;color:var(--mute);font-weight:500;margin-bottom:1rem}
+h1{font-weight:200;font-size:clamp(1.7rem,4.4vw,2.6rem);letter-spacing:.06em;text-transform:uppercase;line-height:1.2;margin-bottom:.9rem}
+h1 b{font-weight:500}
+.intro{color:var(--mute);margin-bottom:2.2rem;max-width:62ch}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.4rem 1.5rem;margin-bottom:1rem;transition:border-color .3s}
+.q:focus-within{border-color:rgba(255,255,255,.3)}
+.q.err{border-color:var(--red)}
+.q label.t{display:block;font-weight:500;font-size:.95rem;margin-bottom:.25rem}
+.q .h{display:block;color:var(--mute);font-size:.8rem;margin-bottom:.9rem}
+.req{color:var(--red);margin-left:.2em}
+input[type=text],input[type=email],input[type=tel],input[type=url],input[type=number],textarea,select{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:10px;color:#fff;font:300 .95rem 'Montserrat',sans-serif;padding:.8em 1em;outline:none;transition:.25s}
+input:focus,textarea:focus,select:focus{border-color:rgba(255,255,255,.45)}
+textarea{min-height:96px;resize:vertical}
+select option{color:#000}
+.opts{display:flex;flex-wrap:wrap;gap:.5rem}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt span{display:inline-flex;align-items:center;gap:.5em;padding:.6em 1.05em;border:1px solid var(--line);border-radius:999px;font-size:.84rem;cursor:pointer;transition:.2s;user-select:none;background:var(--card2)}
+.opt span:hover{border-color:rgba(255,255,255,.35)}
+.opt input:checked+span{background:#fff;color:#0b0b0d;border-color:#fff;font-weight:500}
+.opt input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.opts.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+.opts.cards .opt span{border-radius:12px;display:block;padding:.9em 1.05em;height:100%}
+.opts.cards .opt span em{display:block;font-style:normal;font-size:.74rem;color:var(--mute);margin-top:.25rem;font-weight:300}
+.opts.cards .opt input:checked+span em{color:#333}
+.count{font-size:.72rem;color:var(--mute);margin-top:.6rem}
+.scale{display:flex;gap:.4rem}
+.scale .opt{flex:1}.scale .opt span{justify-content:center;width:100%;border-radius:10px}
+.scale-l{display:flex;justify-content:space-between;font-size:.72rem;color:var(--mute);margin-top:.45rem}
+.prefill{font-size:.72rem;color:var(--silver);margin-top:.4rem;letter-spacing:.04em}
+.member{border:1px dashed var(--line);border-radius:12px;padding:1rem;margin-bottom:.7rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;position:relative}
+.member .full{grid-column:1/-1}
+.member .rm{position:absolute;top:.5rem;right:.6rem;background:none;border:0;color:var(--mute);cursor:pointer;font-size:1rem}
+.add{background:none;border:1px dashed rgba(255,255,255,.3);color:#fff;border-radius:999px;padding:.6em 1.2em;font:400 .8rem 'Montserrat';cursor:pointer}
+.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(11,11,13,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:10}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:76px;gap:1rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.7em;padding:.95em 1.8em;border:1px solid rgba(255,255,255,.8);border-radius:999px;background:transparent;color:#fff;font:500 .7rem 'Montserrat';letter-spacing:.26em;text-transform:uppercase;cursor:pointer;text-decoration:none;transition:.25s}
+.btn:hover{background:#fff;color:#0b0b0d}
+.btn.solid{background:#fff;color:#0b0b0d}.btn.solid:hover{background:transparent;color:#fff}
+.btn.wa{background:#25D366;border-color:#25D366;color:#06210f}.btn.wa:hover{background:transparent;color:#25D366}
+.btn:disabled{opacity:.3;pointer-events:none}
+.ghost{background:none;border:0;color:var(--mute);font:400 .74rem 'Montserrat';letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.steps{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:2rem}
+.steps button{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--mute);font:500 .7rem 'Montserrat';cursor:pointer}
+.steps button.on{background:#fff;color:#0b0b0d;border-color:#fff}
+.steps button.done{border-color:rgba(255,255,255,.45);color:#fff}
+.hero-card{background:linear-gradient(140deg,var(--navy),#0b0b0d 70%);border:1px solid var(--line);border-radius:20px;padding:2.2rem 1.8rem;margin-bottom:1.4rem}
+.hero-card ul{list-style:none;display:grid;gap:.6rem;margin:1.4rem 0 0}
+.hero-card li{display:flex;gap:.8rem;align-items:flex-start;font-size:.9rem}
+.hero-card li::before{content:"";flex:none;width:18px;height:1px;background:#fff;margin-top:.75em}
+.code{font:500 1.6rem 'Montserrat';letter-spacing:.2em;text-align:center;padding:1.2rem;border:1px solid var(--line);border-radius:14px;background:var(--card2);margin:1rem 0}
+.recap{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem 1.4rem;margin-bottom:1rem}
+.recap h3{font-weight:500;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;margin-bottom:.7rem;display:flex;justify-content:space-between;align-items:center}
+.recap h3 button{background:none;border:0;color:var(--mute);font:400 .66rem 'Montserrat';letter-spacing:.14em;text-transform:uppercase;cursor:pointer;text-decoration:underline}
+.recap dl{display:grid;grid-template-columns:minmax(140px,38%) 1fr;gap:.35rem 1rem;font-size:.84rem}
+.recap dt{color:var(--mute)}
+.recap dd{white-space:pre-wrap;word-break:break-word}
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin:1.4rem 0}
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:#fff;color:#0b0b0d;padding:.7em 1.3em;border-radius:999px;font-size:.8rem;font-weight:500;opacity:0;transition:.3s;pointer-events:none;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.note{font-size:.78rem;color:var(--mute);margin-top:.6rem}
+.hide{display:none!important}
+@media(max-width:560px){.member{grid-template-columns:1fr}.recap dl{grid-template-columns:1fr}.recap dt{margin-top:.5rem}.nav .wrap{height:70px}.btn{padding:.9em 1.3em;letter-spacing:.18em}}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <div class="brand">Vseven Production<small>Projet site · Clubsport France</small></div>
+    <div class="meta" id="meta">≈ 10 min</div>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+</div>
+
+<main class="wrap" id="app"></main>
+
+<div class="nav" id="navbar">
+  <div class="wrap">
+    <button class="btn" id="prev">← Retour</button>
+    <span class="ghost" id="saved"></span>
+    <button class="btn solid" id="next">Suivant →</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const WA='41782691267';
+const KEY='csf_qcm_v1';
+
+/* ----------- QUESTIONS ----------- */
+const ADMIN={raison:'CLUBSPORT FRANCE',forme:'SAS — Société par actions simplifiée',siren:'108 720 491',siret:'108 720 491 00019',tva:'FR52108720491',naf:'45.11Z — Commerce de voitures et de véhicules automobiles légers',siege:'RDC Lot 11, ZI des Béthunes — 11 Rue du Bois du Pont, 95310 Saint-Ouen-l\'Aumône',president:'Selliah Mathialakan',creation:'12/08/2026'};
+const STEPS=[
+{t:'Bienvenue',sub:'Faisons connaissance',intro:'',welcome:true,f:[
+ {id:'contact_nom',type:'text',l:'Votre nom et prénom',req:1},
+ {id:'contact_role',type:'radio',l:'Votre rôle chez Clubsport France',o:['Gérant / Président','Associé','Commercial','Responsable marketing','Autre'],req:1},
+ {id:'contact_tel',type:'tel',l:'Votre téléphone',ph:'+33 6 …'},
+ {id:'contact_mail',type:'email',l:'Votre e-mail'},
+]},
+{t:'Identité',sub:'Qui êtes-vous ?',intro:'Ces réponses servent à écrire la page « La maison » et le ton de tout le site. Répondez comme vous parleriez à un client.',f:[
+ {id:'nom_com',type:'text',l:'Nom commercial affiché sur le site',v:'Clubsport France',req:1},
+ {id:'slogan',type:'radio',l:'Signature / slogan',o:['Drive the culture','More than a brand','Autre (précisez ci-dessous)','Pas de slogan'],v:'Drive the culture'},
+ {id:'slogan_autre',type:'text',l:'Votre slogan',if:['slogan','Autre (précisez ci-dessous)']},
+ {id:'histoire',type:'textarea',l:'Racontez l\'histoire de Clubsport France en quelques phrases',h:'Comment est né le projet, d\'où vient la passion, les étapes clés.',req:1},
+ {id:'pourquoi_nom',type:'textarea',l:'Pourquoi le nom « Clubsport » ?',h:'Clin d\'œil aux finitions Clubsport (Porsche, VW…), esprit club, autre ?'},
+ {id:'fondateurs',type:'text',l:'Qui a fondé l\'entreprise ?'},
+ {id:'experience',type:'radio',l:'Années d\'expérience de l\'équipe dans l\'automobile',o:['Moins de 3 ans','3 à 5 ans','5 à 10 ans','Plus de 10 ans']},
+ {id:'ventes_an',type:'radio',l:'Nombre de véhicules vendus par an (environ)',o:['Moins de 30','30 à 80','80 à 150','Plus de 150','Je préfère ne pas dire']},
+ {id:'mission',type:'text',l:'Votre mission en une phrase',ph:'Ex. : Rendre l\'achat d\'une voiture d\'exception simple et transparent.'},
+]},
+{t:'Valeurs',sub:'Votre ADN',intro:'Ce qui vous rend différents de tous les autres vendeurs de voitures.',f:[
+ {id:'valeurs',type:'check',max:3,l:'Vos 3 valeurs principales',o:['Passion','Transparence','Exclusivité','Confiance','Excellence','Proximité','Performance','Discrétion','Authenticité','Exigence','Réactivité','Sur-mesure'],req:1},
+ {id:'ton',type:'radio',l:'Le ton du site',o:['Luxe & exclusif','Passion & sport auto','Premium mais accessible','Proche & chaleureux'],req:1},
+ {id:'mots',type:'text',l:'3 mots qu\'un client devrait dire après être passé chez vous'},
+ {id:'cible',type:'check',l:'Vos clients types',o:['Passionnés d\'auto sportive','Particuliers premium (SUV, berlines)','Collectionneurs','Chefs d\'entreprise / professionnels','Jeunes actifs (1ère sportive)','Clients étrangers / export','Footballeurs, artistes, influenceurs']},
+ {id:'budget_client',type:'radio',l:'Budget moyen de vos clients',o:['Moins de 25 000 €','25 000 – 50 000 €','50 000 – 100 000 €','Plus de 100 000 €','Très variable']},
+ {id:'marques',type:'check',l:'Les marques que vous voulez mettre en avant',o:['Porsche','BMW M','Audi RS / S','Mercedes-AMG','Maserati','Land Rover / Range Rover','Ferrari','Lamborghini','McLaren','Aston Martin','Bentley','Honda Type R / JDM','Volkswagen GTI / R','Toyota / 4x4','Toutes']},
+ {id:'difference',type:'textarea',l:'Qu\'est-ce qui vous différencie de la concurrence ?',req:1},
+ {id:'concurrents',type:'text',l:'Concurrents ou concessions que vous admirez (ou qui vous agacent 😉)'},
+ {id:'jamais',type:'textarea',l:'Ce que vous ne voulez JAMAIS voir sur votre site',h:'Style, ton, type de photos, promesses…'},
+]},
+{t:'Équipe',sub:'Les visages de Clubsport',intro:'Une page équipe rassure énormément les acheteurs, surtout sur des voitures à ce prix. Facultatif.',f:[
+ {id:'equipe_ok',type:'radio',l:'Voulez-vous présenter l\'équipe sur le site ?',o:['Oui, avec photos','Oui, sans photos (prénoms et rôles)','Non, pas pour l\'instant'],req:1},
+ {id:'equipe',type:'team',l:'Membres de l\'équipe',h:'Ajoutez chaque personne qui apparaîtra.',if:['equipe_ok',['Oui, avec photos','Oui, sans photos (prénoms et rôles)']]},
+ {id:'shooting_equipe',type:'radio',l:'Un shooting photo / vidéo de l\'équipe au showroom ?',o:['Oui, ça nous intéresse','On a déjà des photos','Non merci'],if:['equipe_ok','Oui, avec photos']},
+]},
+{t:'Services',sub:'Ce que vous proposez',intro:'Cochez tout ce que vous faites aujourd\'hui (ou que vous voulez faire). Les 3 premiers sont déjà sur la démo.',f:[
+ {id:'services',type:'check',l:'Vos services',o:['Vente de véhicules','Achat cash de véhicules','Reprise','Dépôt-vente','Recherche personnalisée (mandat)','Import (Europe / monde)','Export','Extension de garantie','Livraison à domicile','Financement crédit','LOA / LLD','Carte grise / démarches','Plaques personnalisées','Nettoyage / detailing','Polissage','Traitement céramique','Pose de film PPF','Préparation esthétique','Entretien / mécanique (partenaire)','Location courte durée','Gardiennage / stockage'],v:['Vente de véhicules','Reprise','Dépôt-vente','Recherche personnalisée (mandat)','Extension de garantie','Livraison à domicile','Plaques personnalisées','Nettoyage / detailing','Polissage'],req:1},
+ {id:'garantie',type:'text',l:'Garantie proposée (durée, organisme)',ph:'Ex. : 12 mois Opteven, extensible à 36 mois',if:['services','Extension de garantie']},
+ {id:'livraison',type:'text',l:'Livraison : zone et conditions',ph:'Ex. : toute la France, tarif selon distance',if:['services','Livraison à domicile']},
+ {id:'financement',type:'text',l:'Financement : avec quel organisme ?',if:['services',['Financement crédit','LOA / LLD']]},
+ {id:'reprise_process',type:'textarea',l:'Comment se passe une reprise chez vous ?',h:'Estimation sur photos, inspection, délai de paiement…',if:['services','Reprise']},
+ {id:'depot_conditions',type:'textarea',l:'Dépôt-vente : vos conditions',h:'Commission (% ou forfait), durée du mandat, ce qui est inclus (photos, annonces, essais…)',if:['services','Dépôt-vente']},
+ {id:'services_autres',type:'textarea',l:'Autres services non listés'},
+]},
+{t:'Mandataire',sub:'Recherche de véhicule',intro:'On va créer une page « Je cherche ma voiture » : le client remplit sa demande, vous la recevez directement.',f:[
+ {id:'mandat',type:'radio',l:'La recherche sur demande, vous la faites ?',o:['Oui, déjà en place','Oui, on veut la développer','Non'],req:1},
+ {id:'mandat_frais',type:'radio',l:'Comment êtes-vous rémunérés ?',o:['Frais fixes (forfait)','Pourcentage du prix','Inclus dans la marge','Acompte puis solde','À définir'],if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_montant',type:'text',l:'Montant / % (sera affiché « à partir de » ou gardé privé, à vous de voir)',if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_affiche',type:'radio',l:'Afficher ces frais sur le site ?',o:['Oui','Non, sur demande'],if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_delai',type:'radio',l:'Délai moyen pour trouver un véhicule',o:['Moins de 2 semaines','2 à 4 semaines','1 à 2 mois','Plus de 2 mois','Ça dépend'],if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_pays',type:'check',l:'Où cherchez-vous ?',o:['France','Allemagne','Belgique','Pays-Bas','Italie','Espagne','Suisse','Royaume-Uni','Japon','États-Unis','Émirats'],if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_champs',type:'check',l:'Ce que le client doit remplir dans sa demande',o:['Marque','Modèle / version','Budget max','Année min.','Kilométrage max','Boîte','Carburant','Couleur ext. / int.','Options indispensables','Délai souhaité','Véhicule à reprendre','Financement souhaité','Photos d\'inspiration'],v:['Marque','Modèle / version','Budget max','Année min.','Kilométrage max','Options indispensables','Délai souhaité','Véhicule à reprendre'],if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+ {id:'mandat_process',type:'textarea',l:'Les étapes de votre recherche, du premier appel à la livraison',if:['mandat',['Oui, déjà en place','Oui, on veut la développer']]},
+]},
+{t:'Esthétique',sub:'Nettoyage, polissage & plaques',intro:'Ces services peuvent faire venir des clients qui n\'achètent pas encore de voiture : c\'est une vraie porte d\'entrée.',f:[
+ {id:'esth_presta',type:'check',l:'Prestations proposées',o:['Nettoyage intérieur','Nettoyage extérieur','Nettoyage complet','Shampoing sièges / moquettes','Soin cuir','Polissage 1 étape (lustrage)','Correction de peinture multi-étapes','Traitement céramique','Film PPF','Vitres teintées','Rénovation des phares','Nettoyage moteur','Covering'],v:['Nettoyage complet','Polissage 1 étape (lustrage)']},
+ {id:'esth_formules',type:'radio',l:'Vous avez des formules / prix fixes ?',o:['Oui, des formules avec prix','Oui mais prix sur devis','Pas encore, à créer ensemble']},
+ {id:'esth_tarifs',type:'textarea',l:'Vos formules et tarifs',ph:'Ex. : Formule Essentielle 89 € · Premium 189 € · Prestige 349 €…',if:['esth_formules','Oui, des formules avec prix']},
+ {id:'esth_lieu',type:'radio',l:'Où ?',o:['Au showroom','À domicile','Les deux']},
+ {id:'esth_externe',type:'radio',l:'Ouvert aux véhicules non achetés chez vous ?',o:['Oui','Non, clients uniquement']},
+ {id:'esth_duree',type:'text',l:'Durée moyenne d\'une prestation',ph:'Ex. : 3 h pour un nettoyage complet'},
+ {id:'plaques',type:'check',l:'Plaques personnalisées : quels types ?',o:['Plaques homologuées classiques','Plaques luxe / 3D / gel','Plaques collection (fond noir)','Plaques fantaisie (show)','Porte-plaques'],if:['services','Plaques personnalisées']},
+ {id:'plaques_prix',type:'text',l:'Prix / délai des plaques',if:['services','Plaques personnalisées']},
+]},
+{t:'Rendez-vous',sub:'Comment on vous rencontre',intro:'Votre showroom est uniquement sur RDV : la prise de rendez-vous doit être ultra simple.',f:[
+ {id:'rdv_types',type:'check',l:'Types de rendez-vous',o:['Visite d\'un véhicule','Essai routier','Estimation / reprise','Dépôt-vente','Recherche personnalisée','Nettoyage / polissage','Livraison / remise des clés','Visio'],v:['Visite d\'un véhicule','Essai routier','Estimation / reprise'],req:1},
+ {id:'rdv_canal',type:'check',l:'Par où le client réserve',o:['WhatsApp','Appel téléphonique','Formulaire sur le site','Agenda en ligne (Calendly / Google)','Instagram DM'],req:1},
+ {id:'rdv_jours',type:'check',l:'Jours d\'ouverture',o:['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'],v:['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi']},
+ {id:'rdv_heures',type:'text',l:'Horaires',v:'9h30 – 19h00',h:'Vos annonces indiquent tantôt « lundi au samedi 9h30–19h », tantôt « mardi au samedi » ou « 10h–19h » : lequel est le bon ?'},
+ {id:'rdv_prevenance',type:'radio',l:'Délai minimum pour réserver',o:['Le jour même','24 h avant','48 h avant','Peu importe']},
+ {id:'rdv_essai',type:'textarea',l:'Conditions pour un essai routier',ph:'Ex. : permis + pièce d\'identité, 25 ans min., caution…'},
+]},
+{t:'Réseaux & contact',sub:'Où vous trouver',intro:'Collez les liens ou les @. On les relie partout sur le site.',f:[
+ {id:'insta',type:'text',l:'Instagram',ph:'@clubsportfrance'},
+ {id:'tiktok',type:'text',l:'TikTok'},
+ {id:'facebook',type:'text',l:'Facebook'},
+ {id:'youtube',type:'text',l:'YouTube'},
+ {id:'snap',type:'text',l:'Snapchat'},
+ {id:'google',type:'text',l:'Fiche Google (lien)',h:'Vous avez 5/5 sur 4 avis : on peut les afficher sur le site.'},
+ {id:'lbc',type:'text',l:'Boutique Leboncoin',v:'https://www.leboncoin.fr/boutique/7995387/clubsport_france.htm'},
+ {id:'autres_plateformes',type:'check',l:'Autres plateformes de vente utilisées',o:['La Centrale','AutoScout24','Mobile.de','Autohero','Aramis (pro)','Facebook Marketplace','Aucune']},
+ {id:'wa_pro',type:'tel',l:'Numéro WhatsApp pour les clients',req:1},
+ {id:'tel_pub',type:'tel',l:'Téléphone affiché sur le site'},
+ {id:'mail_pub',type:'email',l:'E-mail affiché sur le site',req:1},
+ {id:'qui_repond',type:'text',l:'Qui répond aux demandes ?'},
+ {id:'reseaux_gestion',type:'radio',l:'Vos réseaux aujourd\'hui',o:['On poste régulièrement','On poste de temps en temps','Presque jamais','On voudrait déléguer']},
+]},
+{t:'Administratif',sub:'Mentions légales',intro:'Voici ce qu\'on a trouvé au registre officiel. Vérifiez, puis complétez ce qui manque pour des mentions légales et CGV conformes.',admin:true,f:[
+ {id:'admin_ok',type:'radio',l:'Ces informations sont-elles correctes ?',o:['Oui, tout est correct','Non, il faut corriger'],req:1},
+ {id:'admin_corr',type:'textarea',l:'Corrections',if:['admin_ok','Non, il faut corriger']},
+ {id:'capital',type:'text',l:'Capital social',ph:'Ex. : 1 000 €'},
+ {id:'rcs',type:'text',l:'Ville d\'immatriculation RCS',ph:'Ex. : RCS Pontoise'},
+ {id:'resp_pub',type:'text',l:'Directeur de la publication du site',v:'Selliah Mathialakan'},
+ {id:'mail_legal',type:'email',l:'E-mail de contact légal'},
+ {id:'assurance',type:'text',l:'Assurance RC Pro (compagnie)'},
+ {id:'mediateur',type:'text',l:'Médiateur de la consommation (obligatoire pour vendre aux particuliers)',h:'Si vous n\'en avez pas, on vous indiquera les options.'},
+ {id:'cgv',type:'radio',l:'Avez-vous des CGV ?',o:['Oui, je les fournis','Non, à rédiger','Je ne sais pas']},
+ {id:'garantie_legale',type:'radio',l:'Garantie légale de conformité mentionnée sur vos ventes ?',o:['Oui','Non','Je ne sais pas']},
+]},
+{t:'Contenus',sub:'Photos, vidéos, logo',intro:'Plus on a de matière, plus le site sera vivant.',f:[
+ {id:'logo_hd',type:'radio',l:'Logo en haute définition (vectoriel / PNG transparent)',o:['Oui, je l\'envoie','Seulement l\'animation','Non']},
+ {id:'photos',type:'radio',l:'Photos des véhicules',o:['On a les originaux sans filigrane','Seulement celles de Leboncoin','On voudrait un shooting pro']},
+ {id:'videos',type:'check',l:'Vidéos disponibles',o:['Vidéos des véhicules','Showroom','Livraisons clients','Coulisses / équipe','Aucune']},
+ {id:'avis',type:'textarea',l:'Avis ou témoignages clients à mettre en avant',h:'Collez-les ici avec le prénom du client (avec son accord).'},
+ {id:'moodboard',type:'radio',l:'La direction artistique (moodboard bleu nuit / blanc / rouge / argent)',o:['Parfait, on garde','À ajuster','À revoir complètement']},
+ {id:'inspi',type:'textarea',l:'Sites qui vous inspirent (liens)'},
+]},
+{t:'Le site',sub:'Fonctionnement',intro:'Les pages et la gestion au quotidien.',f:[
+ {id:'pages',type:'check',l:'Pages souhaitées',o:['Accueil','Véhicules en stock','Fiche véhicule détaillée','Véhicules vendus','Recherche personnalisée','Dépôt-vente','Reprise / estimation','Esthétique (nettoyage, polissage)','Plaques personnalisées','Équipe','La maison / histoire','Avis clients','FAQ','Blog / actus','Contact & RDV','Mentions légales / CGV'],v:['Accueil','Véhicules en stock','Fiche véhicule détaillée','Recherche personnalisée','Dépôt-vente','Esthétique (nettoyage, polissage)','Contact & RDV','Mentions légales / CGV'],req:1},
+ {id:'langues',type:'check',l:'Langues',o:['Français','Anglais','Allemand','Italien','Arabe'],v:['Français']},
+ {id:'domaine',type:'radio',l:'Nom de domaine',o:['On en a déjà un','À acheter'],req:1},
+ {id:'domaine_nom',type:'text',l:'Lequel ? (ou celui que vous voulez)',ph:'clubsport-france.fr'},
+ {id:'maj_stock',type:'radio',l:'Qui met à jour le stock ?',o:['Nous-mêmes (interface simple)','Vseven (forfait mensuel)','Automatique depuis Leboncoin si possible']},
+ {id:'stock_freq',type:'radio',l:'Combien de nouveaux véhicules par mois ?',o:['1 à 3','4 à 8','9 à 15','Plus de 15']},
+ {id:'date',type:'radio',l:'Mise en ligne souhaitée',o:['Le plus vite possible','Sous 1 mois','Sous 2 mois','Pas pressé']},
+]},
+{t:'Options',sub:'Aller plus loin',intro:'Cochez ce qui vous intéresse : je vous fais une proposition sur mesure. Tout est sur devis, sans engagement.',f:[
+ {id:'upsell',type:'cards',l:'Options Vseven Production',o:[
+  ['Shooting photo véhicules','Photos pro sur fond Clubsport, à l\'unité ou au forfait'],
+  ['Vidéo par véhicule','Reels / TikTok de présentation pour chaque voiture'],
+  ['Gestion des réseaux','Publication planifiée, 30 jours de contenu'],
+  ['Shooting équipe & showroom','Photos et film de présentation de la maison'],
+  ['Bot WhatsApp','Répond 24/7, qualifie les demandes, prend les RDV'],
+  ['Estimation de reprise en ligne','Le client envoie plaque, km et photos'],
+  ['Simulateur de financement','Mensualités LOA / crédit sur chaque fiche'],
+  ['Alertes stock','Le client est prévenu quand sa voiture arrive'],
+  ['Collecte d\'avis Google','Demande d\'avis automatique après chaque vente'],
+  ['Référencement local (SEO)','« voiture prestige Val-d\'Oise », fiche Google optimisée'],
+  ['Campagnes publicitaires','Meta / Google Ads ciblées'],
+  ['Site multilingue','Anglais / autres pour l\'export'],
+  ['Hébergement & maintenance','Mises à jour, sécurité, stock'],
+  ['Cartes de visite & print','Flyers, plaques showroom, goodies']]},
+ {id:'budget',type:'radio',l:'Budget global envisagé pour le projet',o:['Moins de 1 500 €','1 500 – 3 000 €','3 000 – 6 000 €','Plus de 6 000 €','Je préfère en parler']},
+ {id:'mensuel',type:'radio',l:'Ouvert à un accompagnement mensuel ?',o:['Oui','Peut-être','Non']},
+ {id:'priorite',type:'radio',l:'Votre priorité n°1',o:['Vendre plus de voitures','Rentrer plus de dépôts-ventes','Développer la recherche sur mesure','Développer l\'esthétique','Image de marque'],req:1},
+ {id:'remarques',type:'textarea',l:'Un dernier mot, une idée, une question ?'},
+]},
+];
+
+/* ----------- STATE ----------- */
+let S={step:0,a:{},ref:null};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+STEPS.forEach(st=>st.f.forEach(q=>{if(q.v!==undefined&&S.a[q.id]===undefined)S.a[q.id]=Array.isArray(q.v)?[...q.v]:q.v}));
+if(!S.ref){const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';S.ref='CSF-'+Array.from({length:4},()=>c[Math.floor(Math.random()*c.length)]).join('')}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));$('#saved').textContent='Enregistré ✓'}catch(e){}}
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TOTAL=STEPS.length+1; // + recap
+
+function visible(q){
+  if(!q.if)return true;const[k,v]=q.if,cur=S.a[k],vals=Array.isArray(v)?v:[v];
+  return Array.isArray(cur)?cur.some(x=>vals.includes(x)):vals.includes(cur);
+}
+function filled(q){const v=S.a[q.id];if(q.type=='team')return Array.isArray(v)&&v.some(m=>m.prenom);return Array.isArray(v)?v.length>0:!!(v&&String(v).trim())}
+
+/* ----------- RENDER ----------- */
+function field(q){
+  const v=S.a[q.id],name=q.id;
+  let html=`<div class="q" data-q="${q.id}"><label class="t" for="f_${q.id}">${esc(q.l)}${q.req?'<span class="req">*</span>':''}</label>${q.h?`<span class="h">${esc(q.h)}</span>`:'<span class="h"></span>'}`;
+  if(['text','email','tel','url'].includes(q.type))html+=`<input id="f_${q.id}" type="${q.type}" data-k="${q.id}" value="${esc(v||'')}" placeholder="${esc(q.ph||'')}">`;
+  else if(q.type=='textarea')html+=`<textarea id="f_${q.id}" data-k="${q.id}" placeholder="${esc(q.ph||'')}">${esc(v||'')}</textarea>`;
+  else if(q.type=='radio')html+=`<div class="opts">${q.o.map(o=>`<label class="opt"><input type="radio" name="${name}" data-k="${q.id}" value="${esc(o)}"${v==o?' checked':''}><span>${esc(o)}</span></label>`).join('')}</div>`;
+  else if(q.type=='check')html+=`<div class="opts">${q.o.map(o=>`<label class="opt"><input type="checkbox" data-k="${q.id}" value="${esc(o)}"${(v||[]).includes(o)?' checked':''}><span>${esc(o)}</span></label>`).join('')}</div>${q.max?`<div class="count" id="c_${q.id}">${(v||[]).length} / ${q.max} sélectionnées</div>`:''}`;
+  else if(q.type=='cards')html+=`<div class="opts cards">${q.o.map(([o,d])=>`<label class="opt"><input type="checkbox" data-k="${q.id}" value="${esc(o)}"${(v||[]).includes(o)?' checked':''}><span>${esc(o)}<em>${esc(d)}</em></span></label>`).join('')}</div>`;
+  else if(q.type=='team'){const list=(v&&v.length)?v:[{}];html+=`<div id="team">${list.map((m,i)=>member(m,i)).join('')}</div><button class="add" type="button" id="addm">+ Ajouter une personne</button>`}
+  return html+'</div>';
+}
+function member(m,i){return `<div class="member" data-i="${i}"><button type="button" class="rm" data-rm="${i}" aria-label="Retirer">✕</button>
+ <input type="text" placeholder="Prénom" data-m="prenom" value="${esc(m.prenom||'')}">
+ <input type="text" placeholder="Poste / rôle" data-m="poste" value="${esc(m.poste||'')}">
+ <input type="text" class="full" placeholder="Sa voiture de rêve / sa passion auto" data-m="passion" value="${esc(m.passion||'')}">
+ <input type="text" class="full" placeholder="Une phrase sur lui / elle" data-m="bio" value="${esc(m.bio||'')}"></div>`}
+
+function render(){
+  const app=$('#app');window.scrollTo({top:0});
+  const pct=Math.round(S.step/(TOTAL-1)*100);$('#bar').style.width=pct+'%';
+  const left=Math.max(0,Math.round((TOTAL-1-S.step)*0.8));
+  $('#meta').innerHTML=S.step<TOTAL-1?`Étape ${S.step+1} / ${TOTAL-1}<br>≈ ${left||1} min restantes`:'Terminé';
+  let dots=`<div class="steps">${Array.from({length:TOTAL},(_,i)=>`<button data-go="${i}" class="${i==S.step?'on':i<S.step?'done':''}" aria-label="Étape ${i+1}">${i==TOTAL-1?'✓':i+1}</button>`).join('')}</div>`;
+  if(S.step==TOTAL-1){renderRecap(app,dots);return}
+  const st=STEPS[S.step];
+  let h=dots;
+  if(st.welcome)h+=`<div class="hero-card"><div class="eyebrow"><span class="tri"><i></i><i></i><i></i></span>Clubsport France × Vseven</div>
+    <h1>Construisons <b>votre site</b></h1>
+    <p style="color:var(--mute)">Ce questionnaire prend environ 10 minutes. Il nous permet de créer un site qui vous ressemble vraiment : votre histoire, vos valeurs, vos services et votre façon de travailler.</p>
+    <ul><li>Vos réponses sont enregistrées automatiquement sur cet appareil : vous pouvez faire une pause.</li><li>Les questions avec * sont obligatoires, tout le reste est facultatif.</li><li>À la fin, un bouton envoie le tout sur WhatsApp à Milan (Vseven Production).</li></ul></div>`;
+  else h+=`<div class="eyebrow"><span class="tri"><i></i><i></i><i></i></span>${esc(st.t)}</div><h1>${esc(st.sub)}</h1><p class="intro">${esc(st.intro)}</p>`;
+  if(st.admin)h+=`<div class="recap"><h3>Registre national des entreprises</h3><dl>${[['Raison sociale',ADMIN.raison],['Forme',ADMIN.forme],['SIREN',ADMIN.siren],['SIRET (siège)',ADMIN.siret],['N° TVA',ADMIN.tva],['Activité (NAF)',ADMIN.naf],['Siège',ADMIN.siege],['Président',ADMIN.president],['Date de création',ADMIN.creation]].map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl></div>`;
+  h+=st.f.map(q=>visible(q)?field(q):`<div class="hide" data-q="${q.id}"></div>`).join('');
+  app.innerHTML=h;
+  $('#prev').disabled=S.step==0;$('#next').textContent=S.step==TOTAL-2?'Voir le récap →':'Suivant →';$('#navbar').classList.remove('hide');
+}
+
+/* ----------- EVENTS ----------- */
+document.addEventListener('input',e=>{
+  const t=e.target,k=t.dataset.k;
+  if(t.dataset.m!==undefined){const box=t.closest('.member'),i=+box.dataset.i;S.a.equipe=S.a.equipe||[];S.a.equipe[i]=S.a.equipe[i]||{};S.a.equipe[i][t.dataset.m]=t.value;save();return}
+  if(!k)return;
+  const q=STEPS.flatMap(s=>s.f).find(x=>x.id==k);
+  if(t.type=='checkbox'){
+    let arr=S.a[k]||[];
+    if(t.checked){if(q.max&&arr.length>=q.max){t.checked=false;toast(`${q.max} choix maximum`);return}arr=[...arr,t.value]}else arr=arr.filter(x=>x!=t.value);
+    S.a[k]=arr;const c=$('#c_'+k);if(c)c.textContent=`${arr.length} / ${q.max} sélectionnées`;
+  }else S.a[k]=t.value;
+  t.closest('.q')?.classList.remove('err');
+  save();
+  if(t.type=='radio'||t.type=='checkbox'){ // conditional re-render without losing scroll
+    const y=scrollY,st=STEPS[S.step];if(st&&st.f.some(x=>x.if&&x.if[0]==k)){render();scrollTo(0,y)}
+  }
+});
+document.addEventListener('click',e=>{
+  const g=e.target.closest('[data-go]');if(g){S.step=+g.dataset.go;save();render();return}
+  if(e.target.id=='addm'){S.a.equipe=S.a.equipe||[{}];if(!S.a.equipe.length)S.a.equipe.push({});S.a.equipe.push({});save();const y=scrollY;render();scrollTo(0,y);return}
+  const rm=e.target.dataset.rm;if(rm!==undefined){S.a.equipe=(S.a.equipe||[]).filter((_,i)=>i!=rm);save();const y=scrollY;render();scrollTo(0,y)}
+});
+$('#prev').onclick=()=>{if(S.step>0){S.step--;save();render()}};
+$('#next').onclick=()=>{
+  const st=STEPS[S.step];const miss=st.f.filter(q=>q.req&&visible(q)&&!filled(q));
+  document.querySelectorAll('.q.err').forEach(x=>x.classList.remove('err'));
+  if(miss.length){miss.forEach(q=>document.querySelector(`[data-q="${q.id}"]`)?.classList.add('err'));document.querySelector(`[data-q="${miss[0].id}"]`).scrollIntoView({behavior:'smooth',block:'center'});toast('Il manque une réponse obligatoire');return}
+  S.step++;save();render();
+};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._);t._=setTimeout(()=>t.classList.remove('show'),2200)}
+
+/* ----------- RECAP + CODE ----------- */
+function fmt(q){const v=S.a[q.id];if(q.type=='team')return (v||[]).filter(m=>m.prenom).map(m=>`${m.prenom}${m.poste?' — '+m.poste:''}${m.passion?' ('+m.passion+')':''}${m.bio?'\n  '+m.bio:''}`).join('\n');return Array.isArray(v)?v.join(', '):(v||'')}
+function recapText(){
+  let t=`QUESTIONNAIRE SITE — CLUBSPORT FRANCE\nRéf. ${S.ref}\n`;
+  STEPS.forEach(st=>{const rows=st.f.filter(q=>visible(q)&&filled(q));if(!rows.length)return;t+=`\n■ ${st.t.toUpperCase()}\n`;rows.forEach(q=>t+=`• ${q.l} : ${fmt(q)}\n`)});
+  return t;
+}
+async function makeCode(){
+  const json=JSON.stringify({r:S.ref,a:S.a});
+  const bytes=new TextEncoder().encode(json);
+  let out=bytes,flag='1';
+  try{if('CompressionStream' in window){const cs=new Blob([bytes]).stream().pipeThrough(new CompressionStream('deflate-raw'));out=new Uint8Array(await new Response(cs).arrayBuffer());flag='Z'}}catch(e){out=bytes;flag='1'}
+  let bin='';out.forEach(b=>bin+=String.fromCharCode(b));
+  return 'V7'+flag+btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function renderRecap(app,dots){
+  $('#navbar').classList.add('hide');
+  const code=await makeCode();
+  const short=`Bonjour Milan 👋\nVoici le questionnaire du site Clubsport France.\nRéf. ${S.ref} — ${S.a.contact_nom||''}\n\n`;
+  const full=short+recapText()+`\n— Code de sauvegarde —\n${code}`;
+  let msg=full;
+  if(encodeURIComponent(msg).length>7000)msg=short+`Priorité : ${S.a.priorite||'-'}\nOptions : ${(S.a.upsell||[]).join(', ')||'-'}\n\n(Récap complet dans le code ci-dessous)\n\n— Code —\n${code}`;
+  const wa=`https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+  let h=dots+`<div class="eyebrow"><span class="tri"><i></i><i></i><i></i></span>Récapitulatif</div><h1>Merci, c'est <b>presque fini</b></h1>
+  <p class="intro">Relisez vos réponses, puis envoyez-les à Milan sur WhatsApp. Votre code projet :</p>
+  <div class="code">${S.ref}</div>
+  <div class="actions"><a class="btn wa" href="${wa}" target="_blank" rel="noopener">Envoyer sur WhatsApp →</a><button class="btn" id="cp">Copier le récap</button><button class="btn" id="back">Modifier</button></div>
+  <p class="note">Si WhatsApp ne s'ouvre pas : copiez le récap et envoyez-le au +41 78 269 12 67 (WhatsApp).</p><br>`;
+  STEPS.forEach((st,i)=>{const rows=st.f.filter(q=>visible(q)&&filled(q));h+=`<div class="recap"><h3>${esc(st.t)}<button data-go="${i}">Modifier</button></h3>${rows.length?`<dl>${rows.map(q=>`<dt>${esc(q.l)}</dt><dd>${esc(fmt(q))}</dd>`).join('')}</dl>`:'<p class="note">Non renseigné</p>'}</div>`});
+  h+=`<div class="actions"><a class="btn wa" href="${wa}" target="_blank" rel="noopener">Envoyer sur WhatsApp →</a></div>`;
+  app.innerHTML=h;
+  $('#cp').onclick=async()=>{try{await navigator.clipboard.writeText(full);toast('Récap copié ✓')}catch(e){toast('Copie impossible : sélectionnez le texte')}};
+  $('#back').onclick=()=>{S.step=TOTAL-2;save();render()};
+}
+
+/* ----------- DECODER (Milan) : ajoutez #decoder à l'URL ----------- */
+async function decode(code){
+  code=code.trim().replace(/\s+/g,'');if(!code.startsWith('V7'))throw 'Code invalide';
+  const flag=code[2],b64=code.slice(3).replace(/-/g,'+').replace(/_/g,'/');
+  const bin=atob(b64+'==='.slice((b64.length+3)%4));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+  let out=bytes;if(flag=='Z'){const ds=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));out=new Uint8Array(await new Response(ds).arrayBuffer())}
+  return JSON.parse(new TextDecoder().decode(out));
+}
+function renderDecoder(){
+  $('#navbar').classList.add('hide');$('#bar').style.width='100%';$('#meta').textContent='Mode lecture';
+  $('#app').innerHTML=`<div class="eyebrow"><span class="tri"><i></i><i></i><i></i></span>Vseven · Lecture</div><h1>Décoder un <b>questionnaire</b></h1><p class="intro">Collez le code reçu sur WhatsApp (il commence par V7).</p>
+  <div class="q"><textarea id="dc" placeholder="V7Z…"></textarea><div class="actions"><button class="btn solid" id="dgo">Décoder</button><button class="btn" id="dload">Charger dans le formulaire</button></div></div><div id="dout"></div>`;
+  $('#dgo').onclick=async()=>{try{const d=await decode($('#dc').value);const keep=S;S={step:0,a:d.a,ref:d.r};$('#dout').innerHTML=`<div class="code">${esc(d.r)}</div><div class="recap"><dl style="display:block"><dd>${esc(recapText())}</dd></dl></div>`;S=keep}catch(e){toast('Code invalide')}};
+  $('#dload').onclick=async()=>{try{const d=await decode($('#dc').value);S={step:TOTAL-1,a:d.a,ref:d.r};save();location.hash='';render()}catch(e){toast('Code invalide')}};
+}
+function boot(){location.hash=='#decoder'?renderDecoder():render()}
+addEventListener('hashchange',boot);boot();
+</script>
+</body>
+</html>
