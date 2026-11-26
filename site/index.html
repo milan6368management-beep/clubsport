@@ -383,7 +383,7 @@ a.svc-a,.svc a{display:block;background:var(--anth);padding:2.4rem 2rem 2.6rem;b
  background:radial-gradient(120% 90% at 0% 0%,rgba(27,58,156,.4),transparent 60%),linear-gradient(165deg,rgba(30,32,40,.92),rgba(12,13,17,.95));border:1px solid rgba(255,255,255,.14);box-shadow:0 12px 30px rgba(0,0,0,.55);backdrop-filter:blur(8px);will-change:transform,opacity}
 .stile .sc-ico{width:28px;height:28px;margin:0 0 auto}
 .stile .st-n{position:absolute;right:.45rem;top:.15rem;font-weight:200;font-size:1.9rem;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.16)}
-.stile b{font-weight:500;font-size:.76rem;letter-spacing:.02em;text-transform:uppercase;line-height:1.3;overflow-wrap:break-word;hyphens:manual}
+.stile b{font-weight:500;font-size:.76rem;letter-spacing:.02em;text-transform:uppercase;line-height:1.3;display:block;overflow-wrap:normal;hyphens:manual}
 .stile:active{transform:scale(.97)}
 @media(min-width:600px){.svc-grid{grid-template-columns:repeat(4,1fr)}.stile b{font-size:.92rem}}
 @media(min-width:1000px){.svc-grid{display:none}}
@@ -1267,6 +1267,9 @@ const SVCI=[
  const grid=document.getElementById('svcGrid');
  grid.innerHTML=SVC.map((s,i)=>`<button type="button" class="stile" data-more="${i}"><span class="st-n" data-noi18n>${String(i+1).padStart(2,'0')}</span><svg class="sc-ico" viewBox="0 0 32 32" aria-hidden="true">${SVCI[i]}</svg><b>${s[0]}</b></button>`).join('');
  const tiles=[...grid.children];
+ function fitTiles(){tiles.forEach(t=>{const b=t.querySelector('b');b.style.fontSize='';if(!b.clientWidth)return;let f=parseFloat(getComputedStyle(b).fontSize);while(b.scrollWidth>b.clientWidth+1&&f>8){f-=.5;b.style.fontSize=f+'px'}})}
+ new MutationObserver(()=>requestAnimationFrame(fitTiles)).observe(grid,{subtree:true,characterData:true,childList:true});
+ addEventListener('resize',()=>requestAnimationFrame(fitTiles));setTimeout(fitTiles,350);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitTiles);
  grid.addEventListener('click',e=>{const b=e.target.closest('[data-more]');if(b)box.querySelector(`[data-more="${b.dataset.more}"]`).click()});
  const cl=(v,a=0,b=1)=>Math.max(a,Math.min(b,v)),ease=t=>1-Math.pow(1-t,3),lerp=(a,b,t)=>a+(b-a)*t;
  const rot=cards.map((_,i)=>((i*37)%17-8)*1.6);
